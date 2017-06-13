@@ -1,1 +1,3 @@
 To Do:
+- Make diffusion so it can't go past 0 (article in Favorites)
+- See what noise can happen while just reproducing
