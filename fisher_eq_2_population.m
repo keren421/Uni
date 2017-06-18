@@ -23,7 +23,7 @@ cells = zeros(length(x_cells)-1,length(t));
 population1 = zeros(size(cells));
 population2 = zeros(size(cells));
 front_location = nan(size(t));
-population1(ceil(length(x_cells)/2),1) = initial_population;
+population1(1,1) = initial_population;
 
 for i_t = 2:length(t)
     disp(['time is ' num2str(t(i_t))])
@@ -31,8 +31,8 @@ for i_t = 2:length(t)
     p = dt*lambda*(k-cells(:,i_t-1))/k;
     p = min(p,ones(size(p)));
     p = max(p,zeros(size(p)));
-    population1(:,i_t) = population1(:,i_t-1) + binornd(population1(:,i_t-1),p);
-    population2(:,i_t) = population2(:,i_t-1) + binornd(population2(:,i_t-1),p);
+    population1(:,i_t) = population1(:,i_t-1) + approximate_binornd(population1(:,i_t-1),p);
+    population2(:,i_t) = population2(:,i_t-1) + approximate_binornd(population2(:,i_t-1),p);
     
     if (sum(isnan(cells(:,i_t))) >0)
         error('a nan appeared');
