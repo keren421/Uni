@@ -1,7 +1,7 @@
-function [ diffused_vector ] = diffuse_vector(population_vector)
+function [ diffused_vector ] = diffuse_vector(population_vector,p_diffuse)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
-    move_cells = binornd(population_vector,0.5); %amount of bacteria that will move because of diffursion
+    move_cells = binornd(population_vector,p_diffuse); %amount of bacteria that will move because of diffursion
     diffused_vector = population_vector - move_cells; %all moved bacteria are reduced
     
     move_right = binornd(move_cells,0.5); %move right or left

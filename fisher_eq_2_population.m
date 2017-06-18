@@ -1,4 +1,4 @@
-function [population1,population2] = fisher_eq_2_population(eq_parm, run_parm, mutation_info)
+function [population1,population2,t,front_location] = fisher_eq_2_population(eq_parm, run_parm, mutation_info)
 lambda = eq_parm.lambda;
 k = eq_parm.k;
 D = eq_parm.D;
@@ -9,12 +9,12 @@ t_max = run_parm.t_max;
 initial_population = run_parm.initial_population;
 dt_view = run_parm.dt_view;
 front_ratio = run_parm.front_ratio;
-
+max_p = run_parm.max_p;
 t_mutation = mutation_info.time;
 mutation_placement = mutation_info.placement;
 mutation_size = mutation_info.initial_size;
 
-dt = (dx/0.6745)^2/(2*D); %hour , so that 50% of the time the bacteria will stay inside the cell, and 25% of it moving to each side
+dt = find_dt(dx,D,lambda,max_p);
 
 %intialize
 t = 0:dt:t_max;
@@ -23,7 +23,7 @@ cells = zeros(length(x_cells)-1,length(t));
 population1 = zeros(size(cells));
 population2 = zeros(size(cells));
 front_location = nan(size(t));
-population1(1,1) = initial_population;
+population1(ceil(length(x_cells)/2),1) = initial_population;
 
 for i_t = 2:length(t)
     disp(['time is ' num2str(t(i_t))])
@@ -39,8 +39,9 @@ for i_t = 2:length(t)
     end
     
     %Diffusion
-    population1(:,i_t) = diffuse_vector(population1(:,i_t));
-    population2(:,i_t) = diffuse_vector(population2(:,i_t));
+    p_diffuse = 2*D*dt/(dx^2);
+    population1(:,i_t) = diffuse_vector(population1(:,i_t),p_diffuse);
+    population2(:,i_t) = diffuse_vector(population2(:,i_t),p_diffuse);
     
     cells(:,i_t) = population1(:,i_t) + population2(:,i_t);
     if rem(t(i_t),dt_view) < dt 
@@ -49,7 +50,7 @@ for i_t = 2:length(t)
         plot(x_cells(2:end),population1(:,i_t),'r-*');
         plot(x_cells(2:end),population2(:,i_t),'g-*');
         xlim([0, L]);
-        ylim([0, k]);
+        ylim([0, 2*k]);
         pause(0.01)
         
     end
@@ -78,7 +79,7 @@ ylabel('x [mm]');
 title('Front location');
 
 figure(3);
-plot(t(2:end), diff(front_location)./diff(t),'b-*');
+plot(t(2:end), smooth(diff(front_location)./diff(t)),'b-*');
 grid on;
 xlabel('t [hour]');
 ylabel('x [mm]');
