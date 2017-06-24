@@ -10,7 +10,7 @@ run_parm.dt_view = 0.5;
 run_parm.front_ratio = 0.9;
 run_parm.max_p = 0.25;
 
-mutation_info.time = 40;
+mutation_info.time = 2;
 mutation_info.placement = 0.6;
 mutation_info.initial_size = 'all'; %  10;
 

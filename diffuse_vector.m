@@ -13,7 +13,7 @@ function [ diffused_vector ] = diffuse_vector(population_vector,p_diffuse)
     
     diffused_vector(end) = diffused_vector(end) +  move_right(end);
     diffused_vector(1) = diffused_vector(1) + move_left(1);       
-    if ~isempty(find(diffuse_vector<0,1))
+    if ~isempty(find(diffused_vector<0,1))
         disp('Problem with diffusion');
     end
 end

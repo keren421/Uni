@@ -20,9 +20,10 @@ dt = find_dt(dx,D,lambda,max_p);
 t = 0:dt:t_max;
 x_cells = 0:dx:L;
 cells = zeros(length(x_cells)-1,length(t));
+front_location = nan(size(t));
+
 population1 = zeros(size(cells));
 population2 = zeros(size(cells));
-front_location = nan(size(t));
 population1(1,1) = initial_population;
 
 for i_t = 2:length(t)
@@ -66,6 +67,15 @@ for i_t = 2:length(t)
         ylim([0, k]);
         pause(0.01)
     end
+    populations_array = {population1(:,i_t),population2(:,i_t)};
+    if t(i_t)> t_mutation
+        winning_pop = FindWinningPopulation(cells(:,i_t),populations_array,k,0.99);
+        if ~isnan(winning_pop)
+            disp(num2str(winning_pop));
+            break;
+        end
+    end
+        
     
     front_index = findFront(cells(:,i_t),k,front_ratio);
     front_location(i_t) = x_cells(front_index);
