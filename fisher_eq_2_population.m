@@ -67,7 +67,7 @@ for i_t = 2:length(t)
         ylim([0, k]);
         pause(0.01)
     end
-    populations_array = {population1, population2};
+    populations_array = [population1; population2];
     if t(i_t)> t_mutation
         winning_pop = FindWinningPopulation(cells, populations_array, k, 0.99);
         if ~isnan(winning_pop)

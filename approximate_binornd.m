@@ -3,6 +3,8 @@ function [randomized_array] = approximate_binornd(n,p)
 %   Detailed explanation goes here
 if length(p) ==1
     p = p*ones(size(n));
+elseif size(p,2)~=size(n,2)
+    p = repmat(p,1,size(n,2));
 end
 randomized_array = round(poissrnd(n.*p));
 condition_applied = find((n>0)&(n.*p<9)&(n.*(1-p)<9));

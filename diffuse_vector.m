@@ -15,6 +15,7 @@ function [ diffused_vector ] = diffuse_vector(population_vector,p_diffuse)
     diffused_vector(1) = diffused_vector(1) + move_left(1);       
     if ~isempty(find(diffused_vector<0,1))
         disp('Problem with diffusion');
+        diffused_vector = max(diffused_vector,0);
     end
 end
 

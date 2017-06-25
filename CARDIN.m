@@ -1,5 +1,5 @@
-eq_parm.lambda = 10; %1/hour 
-eq_parm.k = 200;
+eq_parm.lambda = 5; %1/hour 
+eq_parm.k = 50;
 eq_parm.D = 10; %mm^2/hour
 
 run_parm.L = 1e3; %mm
