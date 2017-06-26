@@ -1,4 +1,4 @@
-function [populations] = divideToSections(cells,k)
+function [populations,indices] = divideToSections(cells,k)
 num_devision = 50;
 first_index = findFront(cells,k,1.5);
 last_index = findFront(cells,k,0);
@@ -14,7 +14,7 @@ for i = 1:num_devision
     final_index = initial_index+num_indices;
     populations(initial_index:final_index,i+1) = cells(initial_index:final_index);
 end
-
+indices = [1,first_index:num_indices:last_index];
 figure(1); clf; plot(populations,'*')
 pause(1);
 end

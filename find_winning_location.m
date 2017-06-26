@@ -26,6 +26,9 @@ for i_t = 2:length(t)
     p = dt*lambda*(k-cells(:))/k;
     p = min(p,ones(size(p)));
     p = max(p,zeros(size(p)));
+    if sum(p<0)~=0
+        disp('PROBLEM!')
+    end
     populations = populations + approximate_binornd(populations,p);
     
     if (sum(isnan(cells)) >0)
@@ -37,6 +40,7 @@ for i_t = 2:length(t)
     populations = diffuse_vector(populations,p_diffuse);
     
     cells = sum(populations,2);
+    
     if rem(t(i_t),dt_view) < dt 
         figure(1); clf;
         plot(x_cells(2:end),cells,'*');
